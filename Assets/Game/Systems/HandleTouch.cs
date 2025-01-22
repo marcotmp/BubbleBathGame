@@ -158,10 +158,12 @@ public class HandleTouch : MonoBehaviour
         }
     }
 
+    public bool isDebugOn = false;
+
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawLine(target.position, target.position - normalVelocity);
-        //Gizmos.DrawLine(target.position, target.position - normalVelocity);
+
+        if (!isDebugOn) return;
 
         foreach (var item in queue)
         {
