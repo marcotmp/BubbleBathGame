@@ -19,14 +19,19 @@ public class TweenTest : MonoBehaviour
     private void Merge(Transform objA, Transform objB, float duration)
     {
         var contactPoint = (objA.position + objB.position) / 2;
-        StartCoroutine(MergeCoroutine(objA, objB, contactPoint, duration));
-    }
 
-    private IEnumerator MergeCoroutine(Transform objA, Transform objB, Vector3 contactPoint, float duration)
-    {
-        objA.DOMove(contactPoint, duration);
+        var sequence = DOTween.Sequence();
         objB.DOMove(contactPoint, duration);
-        objB.DOScale(duration * 0.5f, duration);
-        yield return new WaitForSeconds(duration);
+        sequence.Append(objA.DOMove(contactPoint, duration));
+        // use join to add parallel tweens to the previous appended objects
+        sequence.AppendCallback(() => 
+        {
+            Destroy(objA.gameObject);
+        });
+        sequence.Append(objB.DOScale(duration * 0.5f, duration));
+        //sequence.OnComplete(() =>
+        //{
+        //});
+
     }
 }
