@@ -1,12 +1,16 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class HandleTouch : MonoBehaviour
 {
-    public Transform target;
+    public Transform handGroup;
+    public Transform handModel;
     public float zDistance = 10;
     public float velocityScale = 100;
+    public float rotationSpeed = 1;
 
     private Camera cam;
     private Vector3 oldWorldPosition;
@@ -19,6 +23,7 @@ public class HandleTouch : MonoBehaviour
 
     [Header("ForwardPoint")]
     public Vector3 normalVelocity;
+    public float externalAngle = 0;
 
     private void Start()
     {
@@ -26,48 +31,68 @@ public class HandleTouch : MonoBehaviour
         oldWorldPosition = cam.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * zDistance);
     }
 
+    private struct DataPoint
+    {
+        public Vector3 position;
+        public Vector3 direction;
+        public Vector3 normal;
+        public Vector3 normalVelocity;
+    }
+
+    private Queue<DataPoint> queue = new();
+
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
+        // Get Mouse Position
+        var mousePos = Input.mousePosition;
+        mousePos.z = zDistance;
+        Vector3 newHandPosition = cam.ScreenToWorldPoint(mousePos);
+
+        // Calculate velocity this frame
+        framePointerVelocity = newHandPosition - oldWorldPosition;
+
+        // get normal vector of the direction
+        var pointerDirection = framePointerVelocity.normalized;
+        var pointerDirectionNormal = Vector3.Cross(pointerDirection, cam.transform.forward);
+
+        // Rotate hand
+
+        // Calcular la rotación objetivo
+
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, pointerDirectionNormal);
+
+        // Interpolar hacia la rotación objetivo
+        handModel.rotation = Quaternion.Slerp(handModel.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+
+        // Calculate vectors based on velocity
+        var velocityMagnitude = framePointerVelocity.magnitude;
+        normalVelocity = pointerDirectionNormal * velocityMagnitude * velocityScale;
+
+        // debug pointer direction
+        //crossVisual1.position = newHandPosition + pointerDirectionNormal;
+        //crossVisual2.position = newHandPosition - pointerDirectionNormal;
+
+        // hand position
+        handGroup.position = newHandPosition;
+
+        queue.Enqueue(new DataPoint() 
         {
-            // Get Mouse Position
-            var mousePos = Input.mousePosition;
-            mousePos.z = zDistance;
-            Vector3 newHandPosition = cam.ScreenToWorldPoint(mousePos);
+            position = newHandPosition,
+            direction = pointerDirection,
+            normal = pointerDirectionNormal,
+            normalVelocity = normalVelocity,
+        });
 
-            // Calculate velocity this frame
-            framePointerVelocity = newHandPosition - oldWorldPosition;
-
-            // get normal vector of the direction
-            var pointerDirection = framePointerVelocity.normalized;
-            var pointerDirectionNormal = Vector3.Cross(pointerDirection, cam.transform.forward);
-
-            // Rotate hand
-
-            // Calculate the angle between the current forward and the target direction
-            float targetAngle = Mathf.Atan2(pointerDirectionNormal.y, pointerDirectionNormal.x) * Mathf.Rad2Deg;
-
-            // if not moving, do not rotate
-            if (oldWorldPosition.x != newHandPosition.x && oldWorldPosition.y != newHandPosition.y)
-                target.rotation = Quaternion.Euler(0, 0, targetAngle + 90);
-
-
-
-            // Calculate vectors based on velocity
-            var velocityMagnitude = framePointerVelocity.magnitude;
-            normalVelocity = pointerDirectionNormal * velocityMagnitude * velocityScale;
-
-            // debug pointer direction
-            crossVisual1.position = newHandPosition + pointerDirectionNormal;
-            crossVisual2.position = newHandPosition - pointerDirectionNormal;
-
-            // hand position
-            target.position = newHandPosition;
-
-            // store this velocity as old velocity
-            oldWorldPosition = newHandPosition;
+        if (queue.Count > 100) 
+        {
+            queue.Dequeue();
         }
+
+        // store this velocity as old velocity
+        oldWorldPosition = newHandPosition;
     }
+
 
     [Header("RayDetection")]
     public float maxDistance = 100;
@@ -117,12 +142,12 @@ public class HandleTouch : MonoBehaviour
                 }
 
                 // Visualize the raycast in the Scene view
-                Debug.DrawRay(rayOrigin, rayDirection * hitInfo.distance, Color.green);
+                //Debug.DrawRay(rayOrigin, rayDirection * hitInfo.distance, Color.green);
             }
             else
             {
                 // Visualize the raycast when it doesn't hit anything
-                Debug.DrawRay(rayOrigin, rayDirection * maxDistance, Color.red);
+                //Debug.DrawRay(rayOrigin, rayDirection * maxDistance, Color.red);
             }
 
         }
@@ -131,6 +156,18 @@ public class HandleTouch : MonoBehaviour
     private void OnDrawGizmos()
     {
         //Gizmos.DrawLine(target.position, target.position - normalVelocity);
-        Gizmos.DrawLine(target.position, target.position - normalVelocity);
+        //Gizmos.DrawLine(target.position, target.position - normalVelocity);
+
+        foreach (var item in queue)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawLine(item.position, item.position + item.direction);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(item.position, item.position + item.normal);
+
+            //Gizmos.color = Color.red;
+            //Gizmos.DrawLine(item.position, item.position + item.normalVelocity);
+        }
     }
 }
