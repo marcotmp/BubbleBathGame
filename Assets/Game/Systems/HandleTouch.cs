@@ -58,8 +58,13 @@ public class HandleTouch : MonoBehaviour
         // Rotate hand
 
         // Calcular la rotación objetivo
-
-        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, pointerDirectionNormal);
+        var alwaysUpNormal = pointerDirectionNormal;
+        // Garantizar que el vector resultante apunte hacia arriba
+        if (Vector3.Dot(pointerDirectionNormal, Vector3.up) < 0)
+        {
+            alwaysUpNormal = -pointerDirectionNormal;
+        }
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, alwaysUpNormal);
 
         // Interpolar hacia la rotación objetivo
         handModel.rotation = Quaternion.Slerp(handModel.rotation, targetRotation, Time.deltaTime * rotationSpeed);
@@ -80,7 +85,7 @@ public class HandleTouch : MonoBehaviour
         {
             position = newHandPosition,
             direction = pointerDirection,
-            normal = pointerDirectionNormal,
+            normal = alwaysUpNormal,
             normalVelocity = normalVelocity,
         });
 
