@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class HandleTouch : MonoBehaviour
 {
@@ -48,14 +45,16 @@ public class HandleTouch : MonoBehaviour
         mousePos.z = zDistance;
         Vector3 newHandPosition = cam.ScreenToWorldPoint(mousePos);
 
-        // Calculate velocity this frame
+        // Calculate hand velocity this frame
         framePointerVelocity = newHandPosition - oldWorldPosition;
 
         // get normal vector of the direction
         var pointerDirection = framePointerVelocity.normalized;
         var pointerDirectionNormal = Vector3.Cross(pointerDirection, cam.transform.forward);
 
+        //
         // Rotate hand
+        //
 
         // Calcular la rotación objetivo
         var alwaysUpNormal = pointerDirectionNormal;
@@ -68,6 +67,8 @@ public class HandleTouch : MonoBehaviour
 
         // Interpolar hacia la rotación objetivo
         handModel.rotation = Quaternion.Slerp(handModel.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        
+
 
 
         // Calculate vectors based on velocity
@@ -81,7 +82,7 @@ public class HandleTouch : MonoBehaviour
         // hand position
         handGroup.position = newHandPosition;
 
-        queue.Enqueue(new DataPoint() 
+        queue.Enqueue(new DataPoint()
         {
             position = newHandPosition,
             direction = pointerDirection,
@@ -89,7 +90,7 @@ public class HandleTouch : MonoBehaviour
             normalVelocity = normalVelocity,
         });
 
-        if (queue.Count > 100) 
+        if (queue.Count > 100)
         {
             queue.Dequeue();
         }
@@ -107,6 +108,8 @@ public class HandleTouch : MonoBehaviour
     public AnimationCurve curve;
     public float forceScale = 0.1f;
 
+    public float currentForceMagnitude = 0;
+
     private void FixedUpdate()
     {
         // check collisions
@@ -116,7 +119,6 @@ public class HandleTouch : MonoBehaviour
 
     private void CheckCollision(Vector3 normalVelocity)
     {
-
         // if hand is moving, process collision
         if (framePointerVelocity.magnitude > 0)
         {
@@ -125,9 +127,9 @@ public class HandleTouch : MonoBehaviour
 
             var isDetected = Physics.Raycast(
                 rayOrigin,
-                rayDirection, 
-                out RaycastHit hitInfo, 
-                maxDistance, 
+                rayDirection,
+                out RaycastHit hitInfo,
+                maxDistance,
                 layerMask);
             if (isDetected)
             {
@@ -143,7 +145,19 @@ public class HandleTouch : MonoBehaviour
                     var touchDirection = objTransform.position - hitInfo.point;
                     var touchDirectionNormalized = touchDirection.normalized;
                     var force = touchDirectionNormalized /** normalVelocity.magnitude*/ * forceScale;
-                    rb.AddForce(force);
+
+                    currentForceMagnitude = force.magnitude;
+
+                    // calculate distance percentage
+                    var distanceHandToBubble = hitInfo.point - handGroup.position;
+                    var distancePercentage = distanceHandToBubble.magnitude / maxDistance;
+                    // end
+
+
+                    var adjustedForceMagnitude = curve.Evaluate(distancePercentage) * currentForceMagnitude;
+                    var adjustedForceVector = force.normalized * adjustedForceMagnitude;
+
+                    rb.AddForce(adjustedForceVector);
                 }
 
                 // Visualize the raycast in the Scene view
@@ -173,8 +187,8 @@ public class HandleTouch : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawLine(item.position, item.position + item.normal);
 
-            //Gizmos.color = Color.red;
-            //Gizmos.DrawLine(item.position, item.position + item.normalVelocity);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(item.position, item.position + item.normalVelocity);
         }
     }
 }

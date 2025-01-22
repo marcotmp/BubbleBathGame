@@ -28,6 +28,8 @@ public class TweenTest : MonoBehaviour
         {
             Destroy(objA.gameObject);
         });
+        //sequence.Append(objB.DOScaleY(duration * 0.4f, duration * 0.25f));
+        //sequence.Append(objB.DOScaleY(duration * 0.5f, duration * 0.25f));
         sequence.Append(objB.DOScale(duration * 0.5f, duration));
         //sequence.OnComplete(() =>
         //{
