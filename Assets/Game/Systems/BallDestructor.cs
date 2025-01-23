@@ -19,7 +19,7 @@ public class BallDestructor : MonoBehaviour
     private IEnumerator BubbleDestructorCoroutine(Bubble bubble)
     {
         // disable bubble
-        bubble.CanMerge = false;
+        bubble.Enable(false);
 
         var bubbleScale = bubble.transform.localScale.x;
 

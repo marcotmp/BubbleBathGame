@@ -27,7 +27,7 @@ public class Bubble : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!CanMerge) { return; }
+        if (!CanMerge) return;
 
         //Debug.Log($"Colliding with {collision.gameObject.name}");
         if (collision.gameObject.TryGetComponent(out Bubble otherBubble))
@@ -45,5 +45,18 @@ public class Bubble : MonoBehaviour
     internal void AddForce(Vector3 force)
     {
         rb.AddForce(force);
+    }
+
+    internal void Enable(bool enable)
+    {
+        CanMerge = enable;
+        GetComponent<Rigidbody>().isKinematic = !enable;
+        GetComponent<Collider>().enabled = enable;
+    }
+
+    internal void ResetVelocity()
+    {
+        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
 }

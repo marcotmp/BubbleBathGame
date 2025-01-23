@@ -16,7 +16,7 @@ public class BubbleSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pool = new ObjectPool<Bubble>(Create, OnGet, OnRelease, OnDestroyObject, true, maxCapacity);
+        pool = new ObjectPool<Bubble>(Create, OnGet, OnRelease, OnDestroyObject, true, 10, maxCapacity);
         merger.pool = pool;
         StartCoroutine(CreateCoroutine());
     }
@@ -34,6 +34,8 @@ public class BubbleSpawner : MonoBehaviour
         }
     }
 
+    private static int i = 0;
+
     private Bubble Create()
     {
         var bubbleInstance = Instantiate(bubblePrefab);
@@ -42,6 +44,7 @@ public class BubbleSpawner : MonoBehaviour
         bubbleInstance.transform.parent = parent;
         bubbleInstance.gameObject.SetActive(false);
         bubbleInstance.merger = merger;
+        bubbleInstance.name = "Bubble " + i++; 
         return bubbleInstance;
     }
 
@@ -49,10 +52,9 @@ public class BubbleSpawner : MonoBehaviour
     {
         bubble.GetComponent<Rigidbody>().MovePosition(spawnPoint.position);
         bubble.transform.position = spawnPoint.position;
-        bubble.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-        bubble.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        bubble.CanMerge = true;
-        //obj.gameObject.SetActive(true);
+
+        bubble.ResetVelocity();
+        bubble.Enable(true);
     }
 
     private void OnRelease(Bubble bubble)

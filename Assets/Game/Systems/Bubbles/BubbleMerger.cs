@@ -10,27 +10,41 @@ public class BubbleMerger : MonoBehaviour
 
     internal void MergeBubbles(Bubble bubble, Bubble otherBubble)
     {
-        var scale = bubble.transform.localScale.magnitude;
+        Bubble bigger;
+        Bubble smaller;
 
-        if (scale > maxScale)
-            scale = maxScale;
+        if (bubble.transform.localScale.magnitude > otherBubble.transform.localScale.magnitude)
+        {
+            bigger = bubble;
+            smaller = otherBubble;
+        }
+        else
+        {
+            bigger = otherBubble;
+            smaller = bubble;
+        }
 
-        bubble.CanMerge = false;
-        otherBubble.CanMerge = false;
-        var contactPoint = (bubble.transform.position + otherBubble.transform.position) / 2;
+        var newBigScale = Mathf.Min(bigger.transform.localScale.magnitude * 1.01f, maxScale);
+
+        bigger.Enable(false);
+        smaller.Enable(false);
+
+        var contactPoint = (bigger.transform.position + smaller.transform.position) / 2;
 
         var sequence = DOTween.Sequence();
-        bubble.transform.DOMove(contactPoint, duration);
-        sequence.Append(otherBubble.transform.DOMove(contactPoint, duration));
+        bigger.transform.DOMove(contactPoint, duration);
+        sequence.Append(smaller.transform.DOMove(contactPoint, duration));
         sequence.AppendCallback(() =>
         {
             // Destroy smaller bubble
-            pool.Release(otherBubble);
+            smaller.gameObject.SetActive(false);
+            pool.Release(smaller);
         });
-        sequence.Append(bubble.transform.DOScale(scale * 1.01f, duration));
+        sequence.Append(bigger.transform.DOScale(newBigScale, duration));
         sequence.OnComplete(() =>
         {
-            bubble.CanMerge = true;
+            bigger.Enable(true);
         });
+
     }
 }

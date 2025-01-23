@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 275451509}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.84, y: 1.7082, z: 0}
+  m_LocalPosition: {x: 0, y: 1.7082, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -641,7 +641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxScale: 2
-  duration: 0.5
+  duration: 0.1
 --- !u!114 &858618547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,9 +658,9 @@ MonoBehaviour:
   merger: {fileID: 858618546}
   parent: {fileID: 304480941}
   spawnPoint: {fileID: 1836743910}
-  width: 4
-  delayBetweenCreate: 0.5
-  maxCapacity: 50
+  width: 3.54
+  delayBetweenCreate: 1
+  maxCapacity: 10
 --- !u!1001 &1010008300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -753,7 +753,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305870009}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9ec595262fdf6d34fa43c0d1bbf66abe, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -829,7 +829,7 @@ Transform:
   m_GameObject: {fileID: 1305870009}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8899999, y: 0, z: 0}
+  m_LocalPosition: {x: -2.16, y: 0, z: 0}
   m_LocalScale: {x: 0.42857105, y: 6.435296, z: 3.7559862}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -861,7 +861,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434433796}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9ec595262fdf6d34fa43c0d1bbf66abe, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -937,7 +937,7 @@ Transform:
   m_GameObject: {fileID: 1434433796}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.84, y: -2.8182, z: 0}
+  m_LocalPosition: {x: 0, y: -2.86, z: 0}
   m_LocalScale: {x: 12.132251, y: 0.24667153, z: 3.7559862}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -974,7 +974,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719261244}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9ec595262fdf6d34fa43c0d1bbf66abe, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1050,7 +1050,7 @@ Transform:
   m_GameObject: {fileID: 1719261244}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.16, y: 0, z: 0}
   m_LocalScale: {x: 0.42857105, y: 6.435296, z: 3.7559862}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1081,7 +1081,7 @@ Transform:
   m_GameObject: {fileID: 1836743909}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.78, z: 0}
+  m_LocalPosition: {x: 0, y: 4.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1113,7 +1113,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973009322}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9ec595262fdf6d34fa43c0d1bbf66abe, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1189,7 +1189,7 @@ Transform:
   m_GameObject: {fileID: 1973009322}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.84, y: 3.38, z: 0}
+  m_LocalPosition: {x: -1.84, y: 3.32, z: 0}
   m_LocalScale: {x: 12.132251, y: 0.24667153, z: 3.7559862}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1211,6 +1211,10 @@ PrefabInstance:
     - target: {fileID: 1452120166412408757, guid: d0e2fcd5e34cc4c4cba135c9b8d72e23, type: 3}
       propertyPath: m_Name
       value: HandObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452120166412408757, guid: d0e2fcd5e34cc4c4cba135c9b8d72e23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1553440506480721884, guid: d0e2fcd5e34cc4c4cba135c9b8d72e23, type: 3}
       propertyPath: spawner
