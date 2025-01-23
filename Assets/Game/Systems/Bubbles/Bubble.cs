@@ -5,10 +5,13 @@ public class Bubble : MonoBehaviour
 {
     public float defaultSize = 0.1f;
     public BubbleMerger merger;
+    private Rigidbody rb;
+
     public bool CanMerge { get; set; } = true;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         SetSize(defaultSize);
     }
 
@@ -36,8 +39,11 @@ public class Bubble : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Bubble {name} is affected by " + other.name);
+        //Debug.Log($"Bubble {name} is affected by " + other.name);
+    }
 
-        // from now on, be affected by hand
+    internal void AddForce(Vector3 force)
+    {
+        rb.AddForce(force);
     }
 }

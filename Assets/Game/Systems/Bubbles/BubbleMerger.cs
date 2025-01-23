@@ -1,17 +1,19 @@
 using DG.Tweening;
-using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class BubbleMerger : MonoBehaviour
 {
+    public float maxScale = 2;
     public ObjectPool<Bubble> pool { get; set; }
     [SerializeField] private float duration = 0.5f;
 
     internal void MergeBubbles(Bubble bubble, Bubble otherBubble)
     {
-
         var scale = bubble.transform.localScale.magnitude;
+
+        if (scale > maxScale)
+            scale = maxScale;
 
         bubble.CanMerge = false;
         otherBubble.CanMerge = false;
@@ -26,21 +28,9 @@ public class BubbleMerger : MonoBehaviour
             pool.Release(otherBubble);
         });
         sequence.Append(bubble.transform.DOScale(scale * 1.01f, duration));
-        sequence.OnComplete(() => 
+        sequence.OnComplete(() =>
         {
             bubble.CanMerge = true;
         });
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
