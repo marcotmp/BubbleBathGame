@@ -58,17 +58,20 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _ColorBind: 2
-    - _Definition: 2
+    - _Definition: 1.5
     - _MainPower: 1
-    - _NoiseSize: 5
+    - _NoiseSize: 15
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Reflection: 1
-    - _Speed: 0.2
+    - _Rotation: 0
+    - _Speed: 0.1
     m_Colors:
     - _Color1: {r: 0.58661336, g: 0, b: 0.764151, a: 1}
     - _Color2: {r: 0.31594878, g: 0.7783066, b: 0.9433962, a: 1}
     - _Color3: {r: 0.5584837, g: 1, b: 0, a: 0}
+    - _DirectionA: {r: 1, g: 1, b: 0, a: 0}
+    - _DirectionB: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &9107462950931517820

@@ -2272,8 +2272,8 @@
     "m_ObjectId": "4db3ce620d754cf0a7a7c445c7ba3c72",
     "m_Title": "Normal",
     "m_Position": {
-        "x": -1560.0001220703125,
-        "y": 267.9999694824219
+        "x": -1560.0,
+        "y": 268.0
     }
 }
 
@@ -4838,7 +4838,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "_Step",
     "m_StageCapability": 3,
-    "m_Value": 0.10000000149011612,
+    "m_Value": 0.30000001192092898,
     "m_DefaultValue": 0.0,
     "m_Labels": []
 }
