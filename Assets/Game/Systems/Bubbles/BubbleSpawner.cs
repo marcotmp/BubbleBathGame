@@ -7,52 +7,29 @@ public class BubbleSpawner : MonoBehaviour
     public Bubble bubblePrefab;
     public BubbleMerger merger;
     public Transform parent;
-    public Transform spawnPoint;
-    public float width = 1;
-    public float delayBetweenCreate = 0.5f;
     public int maxCapacity = 10;
     private ObjectPool<Bubble> pool;
+
+    private static int i = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pool = new ObjectPool<Bubble>(Create, OnGet, OnRelease, OnDestroyObject, true, 10, maxCapacity);
-        merger.pool = pool;
-        StartCoroutine(CreateCoroutine());
+        //pool = new ObjectPool<Bubble>(Create, OnGet, OnRelease, OnDestroyObject, true, 10, maxCapacity);
+        merger.spawner = this;
     }
-
-    private IEnumerator CreateCoroutine()
-    {
-        while (true)
-        {
-            var instance = pool.Get();
-            var halfWidth = width / 2;
-            instance.transform.position = spawnPoint.position + new Vector3(Random.Range(-halfWidth, halfWidth), 0, 0);
-            instance.SetSize(instance.defaultSize);
-            instance.gameObject.SetActive(true);
-            yield return new WaitForSeconds(delayBetweenCreate);
-        }
-    }
-
-    private static int i = 0;
 
     private Bubble Create()
     {
         var bubbleInstance = Instantiate(bubblePrefab);
-        bubbleInstance.GetComponent<Rigidbody>().MovePosition(spawnPoint.position);
-        bubbleInstance.transform.position = spawnPoint.position;
         bubbleInstance.transform.parent = parent;
-        bubbleInstance.gameObject.SetActive(false);
         bubbleInstance.merger = merger;
-        bubbleInstance.name = "Bubble " + i++; 
+        bubbleInstance.name = "Bubble " + i++;
         return bubbleInstance;
     }
 
     private void OnGet(Bubble bubble)
     {
-        bubble.GetComponent<Rigidbody>().MovePosition(spawnPoint.position);
-        bubble.transform.position = spawnPoint.position;
-
         bubble.ResetVelocity();
         bubble.Enable(true);
     }
@@ -67,13 +44,15 @@ public class BubbleSpawner : MonoBehaviour
         Destroy(bubble);
     }
 
-    private void OnDrawGizmos()
+    public void ReleaseBubble(Bubble bubble)
     {
-        Gizmos.DrawWireCube(spawnPoint.position, new Vector3(width, 0.1f, 0.1f));
+        //pool.Release(bubble);
+        Destroy(bubble.gameObject);
     }
 
-    public void PopBubble(Bubble bubble)
+    public Bubble GetBubble()
     {
-        pool.Release(bubble);
+        //return pool.Get();
+        return Create();
     }
 }

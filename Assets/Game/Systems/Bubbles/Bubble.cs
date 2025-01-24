@@ -5,19 +5,28 @@ public class Bubble : MonoBehaviour
 {
     public float defaultSize = 0.1f;
     public BubbleMerger merger;
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
 
     public bool CanMerge { get; set; } = true;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         SetSize(defaultSize);
     }
 
     private void OnValidate()
     {
         SetSize(defaultSize);
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("Enabled");
+    }
+
+    private void OnDisable()
+    {
+        
     }
 
     public void SetSize(float size)

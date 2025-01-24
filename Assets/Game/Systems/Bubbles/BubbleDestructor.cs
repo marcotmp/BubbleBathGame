@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-public class BallDestructor : MonoBehaviour
+public class BubbleDestructor : MonoBehaviour
 {
     public float delay = 0.1f;
     public float popSize = 1.5f;
@@ -25,6 +25,6 @@ public class BallDestructor : MonoBehaviour
 
         bubble.transform.DOScale(bubbleScale * popSize, delay);
         yield return new WaitForSeconds(delay);
-        spawner.PopBubble(bubble);
+        spawner.ReleaseBubble(bubble);
     }
 }
