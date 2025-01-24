@@ -32,8 +32,8 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 1
-  m_DefaultReflectionResolution: 128
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 512
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 20f8a98631fd51349b1d8d3fc9d7f255, type: 3}
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 841c1c88de9fd41479d58ed74081f963, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -129,43 +129,43 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.64058214
+      value: 0.57009465
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.38253188
+      value: -0.38440835
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.17101254
+      value: 0.1732061
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.4443927
+      value: 0.49367777
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5650611
+      value: 0.5225526
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.4811521
+      value: -0.5245569
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.50171083
+      value: 0.45613733
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 80.069
+      value: 83.98
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -233.90399
+      value: -156.862
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -145.434
+      value: -68.901
       objectReference: {fileID: 0}
     - target: {fileID: -4202798675411607032, guid: 5fe467e4a6360e946bb56c8bf067bbb8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

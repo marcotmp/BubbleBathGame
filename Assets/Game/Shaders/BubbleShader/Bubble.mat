@@ -63,7 +63,7 @@ Material:
     - _NoiseSize: 15
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Reflection: 1
+    - _Reflection: 1.776
     - _Rotation: 0
     - _Speed: 0.1
     m_Colors:
