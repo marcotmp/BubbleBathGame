@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Bubble : MonoBehaviour
@@ -26,7 +25,7 @@ public class Bubble : MonoBehaviour
 
     private void OnDisable()
     {
-        
+
     }
 
     public void SetSize(float size)
@@ -34,21 +33,35 @@ public class Bubble : MonoBehaviour
         transform.localScale = Vector3.one * size;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         if (!CanMerge) return;
 
-        //Debug.Log($"Colliding with {collision.gameObject.name}");
-        if (collision.gameObject.TryGetComponent(out Bubble otherBubble))
+        if (other.TryGetComponent(out Bubble otherBubble))
         {
             //Debug.Log($"Colliding with Bubble Type {collision.gameObject.name}");
-            merger.MergeBubbles(this, otherBubble);
+            //merger.MergeBubbles(this, otherBubble);
+
+            merger.MoveCloser(this, otherBubble);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public float mergeMinMagnitude = 0.1f;
+
+    private void OnTriggerStay(Collider other)
     {
-        //Debug.Log($"Bubble {name} is affected by " + other.name);
+        if (!CanMerge) return;
+
+        if (other.TryGetComponent(out Bubble otherBubble))
+        {
+            //Debug.Log($"Colliding with Bubble Type {collision.gameObject.name}");
+
+            var dir = otherBubble.transform.position - transform.position;
+            //var normal = dir.normalized;
+
+            if (dir.magnitude < mergeMinMagnitude)
+                merger.MergeBubbles(this, otherBubble);
+        }
     }
 
     internal void AddForce(Vector3 force)
@@ -59,13 +72,18 @@ public class Bubble : MonoBehaviour
     internal void Enable(bool enable)
     {
         CanMerge = enable;
-        GetComponent<Rigidbody>().isKinematic = !enable;
-        GetComponent<Collider>().enabled = enable;
+        //GetComponent<Rigidbody>().isKinematic = !enable;
+        //GetComponent<Collider>().enabled = enable;
     }
 
     internal void ResetVelocity()
     {
         GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, mergeMinMagnitude);
     }
 }

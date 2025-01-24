@@ -18,13 +18,16 @@ public class BubbleDestructor : MonoBehaviour
 
     private IEnumerator BubbleDestructorCoroutine(Bubble bubble)
     {
-        // disable bubble
-        bubble.Enable(false);
+        if (bubble.CanMerge)
+        {
+            // disable bubble
+            bubble.Enable(false);
 
-        var bubbleScale = bubble.transform.localScale.x;
+            var bubbleScale = bubble.transform.localScale.x;
 
-        bubble.transform.DOScale(bubbleScale * popSize, delay);
-        yield return new WaitForSeconds(delay);
-        spawner.ReleaseBubble(bubble);
+            bubble.transform.DOScale(bubbleScale * popSize, delay);
+            yield return new WaitForSeconds(delay);
+            spawner.ReleaseBubble(bubble);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -32,19 +33,33 @@ public class BubbleMerger : MonoBehaviour
         var contactPoint = (bigger.transform.position + smaller.transform.position) / 2;
 
         var sequence = DOTween.Sequence();
-        bigger.transform.DOMove(contactPoint, duration);
-        sequence.Append(smaller.transform.DOMove(contactPoint, duration));
-        sequence.AppendCallback(() =>
+        //bigger.transform.DOMove(contactPoint, duration);
+        //sequence.Append(smaller.transform.DOMove(contactPoint, duration));
+        //sequence.AppendCallback(() =>
         {
             // Destroy smaller bubble
             smaller.gameObject.SetActive(false);
             spawner.ReleaseBubble(smaller);
-        });
+        }
+        //);
         sequence.Append(bigger.transform.DOScale(newBigScale, duration));
         sequence.OnComplete(() =>
         {
             bigger.Enable(true);
         });
 
+    }
+
+    public float mergeIntensity = 0.1f;
+
+    public void MoveCloser(Bubble bubble, Bubble otherBubble)
+    {
+        // find other bubble direction
+        var dir = otherBubble.transform.position - bubble.transform.position;
+        var normal = dir.normalized;
+
+        //bubble.GetComponent<SphereCollider>().enabled = false;
+
+        bubble.AddForce(normal * mergeIntensity);
     }
 }
