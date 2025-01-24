@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Bubble : MonoBehaviour
@@ -5,22 +6,34 @@ public class Bubble : MonoBehaviour
     public float defaultSize = 0.1f;
     public BubbleMerger merger;
     [SerializeField] private Rigidbody rb;
+    public int sizeId;
+    public BubbleData bubbleData;
 
     public bool CanMerge { get; set; } = true;
 
     private void Start()
     {
-        SetSize(defaultSize);
+        SetSizeId(1);
     }
 
     private void OnValidate()
     {
-        SetSize(defaultSize);
+        SetSizeId(1);
     }
 
-    public void SetSize(float size)
+    public void SetSizeId(int sizeId)
     {
-        transform.localScale = Vector3.one * size;
+        this.sizeId = sizeId;
+
+        var data = bubbleData.dataList[sizeId];
+        
+        transform.localScale = Vector3.one * data.scale;
+    }
+
+    public float GetScale()
+    {
+        var data = bubbleData.dataList[sizeId];
+        return data.scale;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -75,5 +88,10 @@ public class Bubble : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, mergeMinMagnitude);
+    }
+
+    internal int GetScore()
+    {
+        return bubbleData.dataList[sizeId].score;
     }
 }

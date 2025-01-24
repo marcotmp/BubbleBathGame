@@ -26,8 +26,7 @@ public class BubbleCannon : MonoBehaviour
 
         var finalSpeedFactor = Random.Range(speedFactor, maxSpeedFactor);
 
-        //bubble.SetSize(size);
-        bubble.SetSize(finalSpeedFactor);
+        bubble.SetSizeId(1);
 
         bubble.AddForce(transform.right * finalSpeedFactor);
     }

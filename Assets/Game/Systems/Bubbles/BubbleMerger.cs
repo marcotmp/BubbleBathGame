@@ -46,6 +46,9 @@ public class BubbleMerger : MonoBehaviour
         sequence.OnComplete(() =>
         {
             bigger.Enable(true);
+
+            //if (bigger.sizeId > 4)
+            //    spawner.DestroyBubble(smaller);
         });
 
     }
