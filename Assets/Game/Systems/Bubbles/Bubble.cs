@@ -18,16 +18,6 @@ public class Bubble : MonoBehaviour
         SetSize(defaultSize);
     }
 
-    private void OnEnable()
-    {
-        Debug.Log("Enabled");
-    }
-
-    private void OnDisable()
-    {
-
-    }
-
     public void SetSize(float size)
     {
         transform.localScale = Vector3.one * size;

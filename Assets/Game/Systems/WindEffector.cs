@@ -43,7 +43,6 @@ public class WindEffector : MonoBehaviour
 
     private void ProcessContact(Collider other)
     { 
-        Debug.Log("Wind touching " + other.name);
         // affect all the objects touched based on the velocity 
         // convert velocity into a force
 
