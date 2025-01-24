@@ -5,41 +5,66 @@ public class Bubble : MonoBehaviour
 {
     public float defaultSize = 0.1f;
     public BubbleMerger merger;
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
+    public int sizeId;
+    public BubbleData bubbleData;
 
     public bool CanMerge { get; set; } = true;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        SetSize(defaultSize);
+        SetSizeId(1);
     }
 
     private void OnValidate()
     {
-        SetSize(defaultSize);
+        SetSizeId(1);
     }
 
-    public void SetSize(float size)
+    public void SetSizeId(int sizeId)
     {
-        transform.localScale = Vector3.one * size;
+        this.sizeId = sizeId;
+
+        var data = bubbleData.dataList[sizeId];
+        
+        transform.localScale = Vector3.one * data.scale;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public float GetScale()
     {
-        if (!CanMerge) return;
-
-        //Debug.Log($"Colliding with {collision.gameObject.name}");
-        if (collision.gameObject.TryGetComponent(out Bubble otherBubble))
-        {
-            //Debug.Log($"Colliding with Bubble Type {collision.gameObject.name}");
-            merger.MergeBubbles(this, otherBubble);
-        }
+        var data = bubbleData.dataList[sizeId];
+        return data.scale;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log($"Bubble {name} is affected by " + other.name);
+        if (!CanMerge) return;
+
+        if (other.TryGetComponent(out Bubble otherBubble))
+        {
+            //Debug.Log($"Colliding with Bubble Type {collision.gameObject.name}");
+            //merger.MergeBubbles(this, otherBubble);
+
+            merger.MoveCloser(this, otherBubble);
+        }
+    }
+
+    public float mergeMinMagnitude = 0.1f;
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!CanMerge) return;
+
+        if (other.TryGetComponent(out Bubble otherBubble))
+        {
+            //Debug.Log($"Colliding with Bubble Type {collision.gameObject.name}");
+
+            var dir = otherBubble.transform.position - transform.position;
+            //var normal = dir.normalized;
+
+            if (dir.magnitude < mergeMinMagnitude)
+                merger.MergeBubbles(this, otherBubble);
+        }
     }
 
     internal void AddForce(Vector3 force)
@@ -50,13 +75,23 @@ public class Bubble : MonoBehaviour
     internal void Enable(bool enable)
     {
         CanMerge = enable;
-        GetComponent<Rigidbody>().isKinematic = !enable;
-        GetComponent<Collider>().enabled = enable;
+        //GetComponent<Rigidbody>().isKinematic = !enable;
+        //GetComponent<Collider>().enabled = enable;
     }
 
     internal void ResetVelocity()
     {
         GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, mergeMinMagnitude);
+    }
+
+    internal int GetScore()
+    {
+        return bubbleData.dataList[sizeId].score;
     }
 }
