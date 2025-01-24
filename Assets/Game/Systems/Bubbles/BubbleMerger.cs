@@ -33,15 +33,10 @@ public class BubbleMerger : MonoBehaviour
         var contactPoint = (bigger.transform.position + smaller.transform.position) / 2;
 
         var sequence = DOTween.Sequence();
-        //bigger.transform.DOMove(contactPoint, duration);
-        //sequence.Append(smaller.transform.DOMove(contactPoint, duration));
-        //sequence.AppendCallback(() =>
-        {
-            // Destroy smaller bubble
-            smaller.gameObject.SetActive(false);
-            spawner.ReleaseBubble(smaller);
-        }
-        //);
+        // Destroy smaller bubble
+        smaller.gameObject.SetActive(false);
+        spawner.ReleaseBubble(smaller);
+
         sequence.Append(bigger.transform.DOScale(newBigScale, duration));
         sequence.OnComplete(() =>
         {

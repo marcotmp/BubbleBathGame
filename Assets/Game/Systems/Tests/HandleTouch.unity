@@ -1993,14 +1993,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barco
       objectReference: {fileID: 0}
-    - target: {fileID: 6961594230171636277, guid: 9cfd89e8240ff3746aac8b3d1ecdd0ff, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7419390351988555978, guid: 9cfd89e8240ff3746aac8b3d1ecdd0ff, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7682660899232209002, guid: 9cfd89e8240ff3746aac8b3d1ecdd0ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

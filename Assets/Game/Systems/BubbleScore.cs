@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BubbleScore", menuName = "Bubbles/BubbleScore")]
 public class BubbleScore : ScriptableObject
 {
-    private int score = 0;
+    public int score = 0;
     public event Action onScoreUpdated;
 
     public void AddScore(int score)
@@ -16,5 +16,10 @@ public class BubbleScore : ScriptableObject
     public int GetScore()
     {
         return score;
+    }
+
+    internal void ResetScore()
+    {
+        score = 0;
     }
 }

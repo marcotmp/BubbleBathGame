@@ -7,6 +7,7 @@ public class GameplayController : MonoBehaviour
 
     private void Start()
     {
+        scoreData.ResetScore();
         handDestructor.bubbleDestroyed.AddListener(OnScore);
     }
 
