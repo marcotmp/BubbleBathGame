@@ -4,7 +4,8 @@ public class BubbleCannon : MonoBehaviour
 {
     public float speedFactor = 1;
     public float maxSpeedFactor = 1;
-    public float size = 0.1f;
+    public int minSizeId = 0;
+    public int maxSizeId = 1;
     [SerializeField] private BubbleSpawner spawner;
 
     private void Start()
@@ -26,7 +27,8 @@ public class BubbleCannon : MonoBehaviour
 
         var finalSpeedFactor = Random.Range(speedFactor, maxSpeedFactor);
 
-        bubble.SetSizeId(1);
+        int sizeId = Random.Range(minSizeId, maxSizeId);
+        bubble.SetSizeId(sizeId);
 
         bubble.AddForce(transform.right * finalSpeedFactor);
     }

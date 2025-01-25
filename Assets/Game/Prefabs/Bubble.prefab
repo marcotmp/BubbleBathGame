@@ -219,7 +219,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSize: 0.1
   merger: {fileID: 0}
+  spawner: {fileID: 0}
   rb: {fileID: 1847106432067646252}
   sizeId: 1
   bubbleData: {fileID: 11400000, guid: a92b817d3b4588f4caa9592a8c2d6570, type: 2}
-  mergeMinMagnitude: 0.04
+  scaleDuration: 0
+  mergeMinMagnitude: 0.1
+  popSize: 1.5
+  delay: 0.1

@@ -24,6 +24,7 @@ public class BubbleSpawner : MonoBehaviour
         var bubbleInstance = Instantiate(bubblePrefab);
         bubbleInstance.transform.parent = parent;
         bubbleInstance.merger = merger;
+        bubbleInstance.spawner = this;
         bubbleInstance.name = "Bubble " + i++;
         return bubbleInstance;
     }

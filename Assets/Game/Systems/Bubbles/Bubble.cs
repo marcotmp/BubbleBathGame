@@ -1,38 +1,61 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
 
 public class Bubble : MonoBehaviour
 {
     public float defaultSize = 0.1f;
     public BubbleMerger merger;
+    public BubbleSpawner spawner;
     [SerializeField] private Rigidbody rb;
+
+    [Range(0, 4)]
     public int sizeId;
+
     public BubbleData bubbleData;
+    public float scaleDuration;
 
     public bool CanMerge { get; set; } = true;
 
+    public float mergeMinMagnitude = 0.1f;
+    internal Action onScaleComplete;
+    public float attractionFactor = 0.1f;
+
+
     private void Start()
     {
-        SetSizeId(1);
+        transform.localScale = Vector3.one * bubbleData.GetScale(1);
+        SetSizeId(0);
     }
 
     private void OnValidate()
     {
-        SetSizeId(1);
+        transform.localScale = Vector3.one * bubbleData.GetScale(sizeId);
+        SetSizeId(sizeId);        
     }
 
     public void SetSizeId(int sizeId)
     {
+        // Explode if size is too big
+        if (sizeId >= bubbleData.Length) 
+        {
+            Explode();
+            return;
+        }
+
         this.sizeId = sizeId;
 
-        var data = bubbleData.dataList[sizeId];
-        
-        transform.localScale = Vector3.one * data.scale;
+        var data = bubbleData.GetDataList(sizeId);
+        var tween = transform.DOScale(data.scale, scaleDuration);
+        tween.onComplete = () => onScaleComplete();
+
+        rb.mass = bubbleData.GetMass(sizeId);
     }
 
     public float GetScale()
     {
-        var data = bubbleData.dataList[sizeId];
+        var data = bubbleData.GetDataList(sizeId);
         return data.scale;
     }
 
@@ -43,13 +66,12 @@ public class Bubble : MonoBehaviour
         if (other.TryGetComponent(out Bubble otherBubble))
         {
             //Debug.Log($"Colliding with Bubble Type {collision.gameObject.name}");
-            //merger.MergeBubbles(this, otherBubble);
+            var dir = otherBubble.transform.position - transform.position;
+            var normal = dir.normalized;
 
-            merger.MoveCloser(this, otherBubble);
+            AddForce(normal * 0.1f);
         }
     }
-
-    public float mergeMinMagnitude = 0.1f;
 
     private void OnTriggerStay(Collider other)
     {
@@ -64,12 +86,29 @@ public class Bubble : MonoBehaviour
 
             if (dir.magnitude < mergeMinMagnitude)
                 merger.MergeBubbles(this, otherBubble);
+            else
+            {
+                //Debug.Log($"Colliding with Bubble Type {collision.gameObject.name}");
+                var normal = dir.normalized;
+
+                AddForce(normal * attractionFactor);
+            }
         }
     }
 
     internal void AddForce(Vector3 force)
     {
         rb.AddForce(force);
+    }
+
+    internal void AddForceClamped(Vector3 force)
+    {
+        var magnitude = rb.linearVelocity.magnitude;
+
+        var vel = rb.linearVelocity + force;
+
+        var newVel = vel * magnitude;
+        rb.linearVelocity = newVel;
     }
 
     internal void Enable(bool enable)
@@ -92,6 +131,36 @@ public class Bubble : MonoBehaviour
 
     internal int GetScore()
     {
-        return bubbleData.dataList[sizeId].score;
+        return bubbleData.GetScore(sizeId);
+    }
+
+    internal bool IsFinalScale()
+    {
+        return sizeId == bubbleData.Length - 1;
+    }
+
+    [Header("Explode Settings")]
+    public float popSize = 1.5f;
+    public float delay = 0.1f;
+
+    public bool exploding = false;
+
+    public void Explode()
+    {
+        if (!exploding)
+        {
+            // disable bubble
+            Enable(false);
+
+            var bubbleScale = transform.localScale.x;
+
+            var tween = transform.DOScale(bubbleScale * popSize, delay);
+            tween.onComplete = () => 
+            {
+                spawner.ReleaseBubble(this);
+                onScaleComplete?.Invoke();
+            };
+        }
+
     }
 }

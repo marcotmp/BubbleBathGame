@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Profiling;
 
 public class BubbleMerger : MonoBehaviour
 {
@@ -9,7 +10,29 @@ public class BubbleMerger : MonoBehaviour
     public BubbleSpawner spawner { get; set; }
     [SerializeField] private float duration = 0.5f;
 
-    internal void MergeBubbles(Bubble bubble, Bubble otherBubble)
+    public void MergeBubbles(Bubble bubble, Bubble otherBubble)
+    {
+        var bubbleIsBigger = bubble.sizeId > otherBubble.sizeId;
+
+        // Get bigger and smaller
+        Bubble bigger = bubbleIsBigger ? bubble : otherBubble;
+        Bubble smaller = bubbleIsBigger ? otherBubble : bubble;
+
+        bigger.Enable(false);
+        smaller.Enable(false);
+
+        // Destroy smaller bubble
+        smaller.gameObject.SetActive(false);
+        spawner.ReleaseBubble(smaller);
+
+        bigger.SetSizeId(bigger.sizeId + 1);
+        bigger.onScaleComplete = () =>
+            // wait for scale up and 
+            bigger.Enable(true);
+        
+    }
+
+    internal void MergeBubbles2(Bubble bubble, Bubble otherBubble)
     {
         Bubble bigger;
         Bubble smaller;
@@ -48,16 +71,14 @@ public class BubbleMerger : MonoBehaviour
 
     }
 
-    public float mergeIntensity = 0.1f;
+    //public float mergeIntensity = 0.1f;
 
-    public void MoveCloser(Bubble bubble, Bubble otherBubble)
-    {
-        // find other bubble direction
-        var dir = otherBubble.transform.position - bubble.transform.position;
-        var normal = dir.normalized;
+    //public void MoveCloser(Bubble bubble, Bubble otherBubble)
+    //{
+    //    // find other bubble direction
+    //    var dir = otherBubble.transform.position - bubble.transform.position;
+    //    var normal = dir.normalized;
 
-        //bubble.GetComponent<SphereCollider>().enabled = false;
-
-        bubble.AddForce(normal * mergeIntensity);
-    }
+    //    bubble.AddForceClamped(normal);
+    //}
 }

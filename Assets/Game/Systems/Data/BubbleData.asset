@@ -12,19 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35aea7fb0e193b943b0cd369dd1d02fe, type: 3}
   m_Name: BubbleData
   m_EditorClassIdentifier: 
+  initialMass: 0.005
+  initialScale: 0.2
   dataList:
   - id: 0
-    scale: 0.1
-    score: 1
-  - id: 1
     scale: 0.2
+    score: 1
+    massFactor: 1
+  - id: 1
+    scale: 0.3
     score: 2
+    massFactor: 2
   - id: 2
     scale: 0.5
     score: 10
+    massFactor: 3
   - id: 3
     scale: 1
     score: 20
+    massFactor: 4
   - id: 4
     scale: 1.5
     score: 50
+    massFactor: 5
