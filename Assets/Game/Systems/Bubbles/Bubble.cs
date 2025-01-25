@@ -169,4 +169,10 @@ public class Bubble : MonoBehaviour
         }
 
     }
+
+    internal AudioClip GetLaughFx()
+    {
+        var data = bubbleData.GetDataList(sizeId);
+        return data.laughSFX;
+    }
 }

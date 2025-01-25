@@ -19,19 +19,24 @@ MonoBehaviour:
     scale: 0.2
     score: 1
     massFactor: 1
+    laughSFX: {fileID: 8300000, guid: b607b5f6c6874ad4b914bb711484e945, type: 3}
   - id: 1
     scale: 0.3
     score: 2
     massFactor: 2
+    laughSFX: {fileID: 8300000, guid: b607b5f6c6874ad4b914bb711484e945, type: 3}
   - id: 2
     scale: 0.5
     score: 10
     massFactor: 3
+    laughSFX: {fileID: 8300000, guid: b607b5f6c6874ad4b914bb711484e945, type: 3}
   - id: 3
     scale: 1
     score: 20
     massFactor: 4
+    laughSFX: {fileID: 8300000, guid: b607b5f6c6874ad4b914bb711484e945, type: 3}
   - id: 4
     scale: 1.5
     score: 50
     massFactor: 5
+    laughSFX: {fileID: 8300000, guid: b607b5f6c6874ad4b914bb711484e945, type: 3}
