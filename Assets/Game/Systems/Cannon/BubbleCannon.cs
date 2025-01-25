@@ -7,6 +7,7 @@ public class BubbleCannon : MonoBehaviour
     public int minSizeId = 0;
     public int maxSizeId = 1;
     [SerializeField] private BubbleSpawner spawner;
+    public SoundObject shootBubbleSound;
 
     private void Start()
     {
@@ -31,5 +32,8 @@ public class BubbleCannon : MonoBehaviour
         bubble.SetSizeId(sizeId);
 
         bubble.AddForce(transform.right * finalSpeedFactor);
+
+        // play score sound
+        shootBubbleSound?.Play();
     }
 }

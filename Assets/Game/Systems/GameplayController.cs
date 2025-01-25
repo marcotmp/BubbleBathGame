@@ -4,6 +4,8 @@ public class GameplayController : MonoBehaviour
 {
     public BubbleDestructor handDestructor;
     public BubbleScore scoreData;
+    public SoundObject scoreSoundObject;
+    public SoundObject laughSound;
 
     private void Start()
     {
@@ -16,6 +18,9 @@ public class GameplayController : MonoBehaviour
         // calculate score based on bubble size
         var score = bubble.GetScore();
         scoreData.AddScore(score);
+
+        // play score sound
+        scoreSoundObject.Play();
 
         // play baby laugh sound
     }

@@ -55,4 +55,5 @@ public struct SizeData
     public float scale;
     public int score;
     public float massFactor;
+    public AudioClip laughSFX;
 }

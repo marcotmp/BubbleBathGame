@@ -14,7 +14,13 @@ public class BubbleDestructor : MonoBehaviour
     {
         if (other.TryGetComponent(out Bubble bubble))
         {
-            StartCoroutine(BubbleDestructorCoroutine(bubble));
+            bubble.onScaleComplete = () =>
+            {
+                // notify player point
+                bubbleDestroyed?.Invoke(bubble);
+            };
+            bubble.Explode();
+            //StartCoroutine(BubbleDestructorCoroutine(bubble));
         }
     }
 
@@ -29,10 +35,10 @@ public class BubbleDestructor : MonoBehaviour
 
             bubble.transform.DOScale(bubbleScale * popSize, delay);
             yield return new WaitForSeconds(delay);
-            
+
             if (CompareTag("Hand"))
             {
-                // notify player point
+                //notify player point
                 bubbleDestroyed?.Invoke(bubble);
             }
 

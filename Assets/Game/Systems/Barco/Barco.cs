@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Barco : MonoBehaviour
 {
-
+    public AudioSource boatSound;
     public Transform boat;
     public Transform p0;
     public Transform p1;
@@ -26,6 +26,10 @@ public class Barco : MonoBehaviour
             boat.position = p0.position;
             boat.gameObject.SetActive(true);
 
+            // start sound loop
+            boatSound.loop = true;
+            boatSound.Play();
+
             var t = boat.DOMove(p1.position, boatDuration);
             t.SetEase(Ease.Linear);
 
@@ -33,6 +37,10 @@ public class Barco : MonoBehaviour
 
             // turn off the boat
             boat.gameObject.SetActive(false);
+
+            // end sound loop
+            boatSound.Stop();
+
             yield return new WaitForSeconds(inactiveDuration);
         }
     }

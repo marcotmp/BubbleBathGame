@@ -23,6 +23,14 @@ public class Bubble : MonoBehaviour
     public float attractionFactor = 0.1f;
 
 
+    [Header("Explode Settings")]
+    public float popSize = 1.5f;
+    public float delay = 0.1f;
+
+    public bool exploding = false;
+
+    public GameObject explodingSoundPrefab;
+
     private void Start()
     {
         transform.localScale = Vector3.one * bubbleData.GetScale(1);
@@ -139,11 +147,7 @@ public class Bubble : MonoBehaviour
         return sizeId == bubbleData.Length - 1;
     }
 
-    [Header("Explode Settings")]
-    public float popSize = 1.5f;
-    public float delay = 0.1f;
 
-    public bool exploding = false;
 
     public void Explode()
     {
@@ -153,6 +157,8 @@ public class Bubble : MonoBehaviour
             Enable(false);
 
             var bubbleScale = transform.localScale.x;
+
+            Instantiate(explodingSoundPrefab);
 
             var tween = transform.DOScale(bubbleScale * popSize, delay);
             tween.onComplete = () => 

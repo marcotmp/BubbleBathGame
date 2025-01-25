@@ -49,6 +49,8 @@ public class BubbleSpawner : MonoBehaviour
     {
         //pool.Release(bubble);
         Destroy(bubble.gameObject);
+        //var instance = Instantiate(explosionSound);
+        //Destroy(instance, 1);
     }
 
     public Bubble GetBubble()
