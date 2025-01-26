@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -40,5 +41,33 @@ public class SoundObject : MonoBehaviour
         Debug.Log($"{name} is playing clip after delay " + delay);
         Play(clip);
         isWaiting = false;
+    }
+
+    internal void PlayOneShot(AudioClip clip)
+    {
+        source.PlayOneShot(clip);
+    }
+
+    public void PlayWithBuffer(AudioClip clip)
+    {
+        if (source.isPlaying)
+        {
+            bufferClip = clip;
+        }
+        else
+        {
+            Play(clip);
+        }
+    }
+
+    private AudioClip bufferClip;
+
+    private void Update()
+    {
+        if (!source.isPlaying && bufferClip != null)
+        {
+            Play(bufferClip);
+            bufferClip = null;
+        }
     }
 }

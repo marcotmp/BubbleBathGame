@@ -34,16 +34,16 @@ public class Bubble : MonoBehaviour
     private void Start()
     {
         transform.localScale = Vector3.one * bubbleData.GetScale(1);
-        SetSizeId(0);
+        SetSizeId(0, false);
     }
 
     private void OnValidate()
     {
         transform.localScale = Vector3.one * bubbleData.GetScale(sizeId);
-        SetSizeId(sizeId);        
+        SetSizeId(sizeId, false);        
     }
 
-    public void SetSizeId(int sizeId)
+    public void SetSizeId(int sizeId, bool animate = true)
     {
         // Explode if size is too big
         if (sizeId >= bubbleData.Length) 
@@ -55,10 +55,14 @@ public class Bubble : MonoBehaviour
         this.sizeId = sizeId;
 
         var data = bubbleData.GetDataList(sizeId);
-        var tween = transform.DOScale(data.scale, scaleDuration);
-        tween.onComplete = () => onScaleComplete();
-
         rb.mass = bubbleData.GetMass(sizeId);
+        if (animate)
+        {
+            var tween = transform.DOScale(data.scale, scaleDuration);
+            tween.OnComplete(() => {
+                onScaleComplete?.Invoke();
+            });
+        }
     }
 
     public float GetScale()

@@ -186,8 +186,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b607b5f6c6874ad4b914bb711484e945, type: 3}
-  m_Resource: {fileID: 8300000, guid: b607b5f6c6874ad4b914bb711484e945, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5efceaef95f603b478d2224393d49a1c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 5efceaef95f603b478d2224393d49a1c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -382,5 +382,5 @@ MonoBehaviour:
   handDestructor: {fileID: 0}
   scoreData: {fileID: 11400000, guid: f84b7a9561c31374dbde741473f9ce02, type: 2}
   scoreSoundObject: {fileID: 8021668400405371662}
-  laughDelay: 0
+  laughDelay: 0.2
   laughSound: {fileID: 2034952086124237715}

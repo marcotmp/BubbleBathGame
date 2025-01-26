@@ -5,7 +5,6 @@ public class GameplayController : MonoBehaviour
     public BubbleDestructor handDestructor;
     public BubbleScore scoreData;
     public SoundObject scoreSoundObject;
-    public float laughDelay = 0.5f;
     public SoundObject laughSound;
 
     private void Start()
@@ -24,6 +23,6 @@ public class GameplayController : MonoBehaviour
         scoreSoundObject.Play();
 
         // play baby laugh sound
-        laughSound.PlayWithDelay(bubble.GetLaughFx(), laughDelay);
+        laughSound.PlayWithBuffer(bubble.GetLaughFx());
     }
 }
