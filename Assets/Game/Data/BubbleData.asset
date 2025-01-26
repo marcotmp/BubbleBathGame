@@ -18,25 +18,25 @@ MonoBehaviour:
   - id: 0
     scale: 0.2
     score: 1
-    massFactor: 1
+    massFactor: 1.5
     laughSFX: {fileID: 8300000, guid: 486632b1fe7bd374cabda8a39639abb1, type: 3}
   - id: 1
     scale: 0.3
     score: 2
-    massFactor: 2
+    massFactor: 1.55
     laughSFX: {fileID: 8300000, guid: 51c7ac99c470fbb4e8333be2c7a1b31d, type: 3}
   - id: 2
     scale: 0.5
     score: 10
-    massFactor: 3
+    massFactor: 1.6
     laughSFX: {fileID: 8300000, guid: f5eb7dbccce564943a2bf67af6f518c3, type: 3}
   - id: 3
     scale: 1
     score: 20
-    massFactor: 4
+    massFactor: 1.7
     laughSFX: {fileID: 8300000, guid: 4da39ae94f6ad82499b03a500a26dfeb, type: 3}
   - id: 4
     scale: 1.5
     score: 50
-    massFactor: 5
+    massFactor: 1.75
     laughSFX: {fileID: 8300000, guid: 0ea142b4859b6a349b1ab33c303a4acc, type: 3}
