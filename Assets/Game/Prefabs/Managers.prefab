@@ -382,5 +382,5 @@ MonoBehaviour:
   handDestructor: {fileID: 0}
   scoreData: {fileID: 11400000, guid: f84b7a9561c31374dbde741473f9ce02, type: 2}
   scoreSoundObject: {fileID: 8021668400405371662}
-  laughDelay: 0.2
   laughSound: {fileID: 2034952086124237715}
+  pointsUIPrefab: {fileID: 9144693529809177333, guid: b0114b62d0c59f943b660d30c04d8952, type: 3}

@@ -26,7 +26,6 @@ public class SoundObject : MonoBehaviour
 
     public void PlayWithDelay(AudioClip clip, float delay)
     {
-        Debug.Log($"{name} is trying to play clip with delay " + delay);
         if (!isWaiting)
         { 
             StartCoroutine(PlayCoroutine(clip, delay));
@@ -35,10 +34,8 @@ public class SoundObject : MonoBehaviour
 
     private IEnumerator PlayCoroutine(AudioClip clip, float delay)
     {
-        Debug.Log($"{name} is waiting clip with delay " + delay);
         isWaiting = true;
         yield return new WaitForSeconds(delay);
-        Debug.Log($"{name} is playing clip after delay " + delay);
         Play(clip);
         isWaiting = false;
     }
@@ -50,7 +47,6 @@ public class SoundObject : MonoBehaviour
 
     public void PlayWithBuffer(AudioClip clip)
     {
-        Debug.Log("Playing with buffer" + clip.name);
         if (source.isPlaying)
         {
             bufferClip = clip;
