@@ -88,8 +88,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _MaxScale: 2
+    - _MaxWiggle: 4
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _WiggleColorShoulder: 2
+    - _WiggleShoulder: 2
     m_Colors:
     - _MaxScaleColor: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
