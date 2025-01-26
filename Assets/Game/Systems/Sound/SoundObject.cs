@@ -50,6 +50,7 @@ public class SoundObject : MonoBehaviour
 
     public void PlayWithBuffer(AudioClip clip)
     {
+        Debug.Log("Playing with buffer" + clip.name);
         if (source.isPlaying)
         {
             bufferClip = clip;

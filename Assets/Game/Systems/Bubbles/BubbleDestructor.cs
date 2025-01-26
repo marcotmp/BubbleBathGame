@@ -17,7 +17,8 @@ public class BubbleDestructor : MonoBehaviour
             bubble.onScaleComplete = () =>
             {
                 // notify player point
-                bubbleDestroyed?.Invoke(bubble);
+                if (bubbleDestroyed != null)
+                    bubbleDestroyed.Invoke(bubble);
             };
             bubble.Explode();
             //StartCoroutine(BubbleDestructorCoroutine(bubble));
@@ -39,7 +40,8 @@ public class BubbleDestructor : MonoBehaviour
             if (CompareTag("Hand"))
             {
                 //notify player point
-                bubbleDestroyed?.Invoke(bubble);
+                if (bubbleDestroyed != null)
+                    bubbleDestroyed.Invoke(bubble);
             }
 
             spawner.ReleaseBubble(bubble);

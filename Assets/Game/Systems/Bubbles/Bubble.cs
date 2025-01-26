@@ -164,12 +164,15 @@ public class Bubble : MonoBehaviour
 
             Instantiate(explodingSoundPrefab);
 
-            var tween = transform.DOScale(bubbleScale * popSize, delay);
-            tween.onComplete = () => 
-            {
+            //var tween = transform.DOScale(bubbleScale * popSize, delay);
+            //tween.onComplete = () => 
+            //{
+            if (onScaleComplete != null)
+                onScaleComplete.Invoke();
+
+            if (spawner != null)
                 spawner.ReleaseBubble(this);
-                onScaleComplete?.Invoke();
-            };
+            //};
         }
 
     }

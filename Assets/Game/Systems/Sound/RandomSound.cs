@@ -9,7 +9,10 @@ public class RandomSound : MonoBehaviour
     void Start()
     {
         var clipId = Random.Range(0, audioList.Length);
-        source.clip = audioList[clipId];
-        source.Play();
+        if (source != null )
+        {
+            source.clip = audioList[clipId];
+            source.Play();
+        }
     }
 }
