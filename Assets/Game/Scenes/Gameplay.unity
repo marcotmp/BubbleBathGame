@@ -2242,10 +2242,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 3829630126195903563, guid: 9e6c7fadd3ac1f64eae4a4cd4098dd0d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5409659443646114977, guid: 9e6c7fadd3ac1f64eae4a4cd4098dd0d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
